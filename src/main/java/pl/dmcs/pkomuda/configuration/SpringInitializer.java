@@ -1,6 +1,7 @@
 package pl.dmcs.pkomuda.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 @Configuration
@@ -8,7 +9,7 @@ public class SpringInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{SpringConfiguration.class};
+        return new Class[] {SpringConfiguration.class, PersistenceConfiguration.class};
     }
 
     @Override
@@ -16,8 +17,9 @@ public class SpringInitializer extends AbstractAnnotationConfigDispatcherServlet
         return new Class[0];
     }
 
+    @NonNull
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/"};
+        return new String[] {"/"};
     }
 }

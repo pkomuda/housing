@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/head::head(#{label.register})"></head>
+    <head th:replace="fragments/head::head">
+        <title th:text="#{label.title}"></title>
+    </head>
     <body>
         <nav th:replace="fragments/navbar::navbar"></nav>
         <form class="center" action="#" th:action="@{/register}" th:object="${account}" method="post">
+            <h1 th:text="#{label.register}"></h1>
             <div class="form-container col-sm-4">
                 <div class="form-group">
                     <label for="username" th:text="#{account.username}"></label>

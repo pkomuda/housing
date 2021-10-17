@@ -3,10 +3,7 @@ package pl.dmcs.pkomuda.model;
 import lombok.Data;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -19,4 +16,8 @@ public abstract class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Setter(lombok.AccessLevel.NONE)
     private Long id;
+
+    @Version
+    @Setter(lombok.AccessLevel.NONE)
+    private Long version;
 }

@@ -8,8 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.dmcs.pkomuda.exceptions.ApplicationBaseException;
 import pl.dmcs.pkomuda.model.Account;
 import pl.dmcs.pkomuda.services.AccountService;
+
+import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,8 +28,13 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute("account") Account account) {
+    public String register(@Valid @ModelAttribute("account") Account account) throws ApplicationBaseException {
         accountService.addAccount(account);
         return "redirect:/";
+    }
+
+    @GetMapping("/confirmAccount")
+    public String confirmAccount() {
+        return "confirmAccount";
     }
 }

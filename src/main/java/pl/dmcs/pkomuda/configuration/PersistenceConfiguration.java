@@ -4,7 +4,6 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -17,9 +16,8 @@ import javax.sql.DataSource;
 import java.util.Map;
 
 @Configuration
-@PropertySource("classpath:application.properties")
-@EnableJpaRepositories(basePackages = "pl.dmcs.pkomuda.repositories")
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "pl.dmcs.pkomuda.repositories")
 public class PersistenceConfiguration {
 
     @Value("${datasource.url}")

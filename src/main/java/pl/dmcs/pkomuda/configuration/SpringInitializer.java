@@ -9,7 +9,12 @@ public class SpringInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {SpringConfiguration.class, PersistenceConfiguration.class};
+        return new Class[] {
+                EmailConfiguration.class,
+                PersistenceConfiguration.class,
+                SecurityConfiguration.class,
+                SpringConfiguration.class
+        };
     }
 
     @Override

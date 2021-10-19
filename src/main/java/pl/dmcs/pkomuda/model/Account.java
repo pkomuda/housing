@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,6 +24,7 @@ import java.util.Set;
 public class Account extends BaseEntity {
 
     @NotBlank
+    @Size(max = 32)
     private String username;
 
     @NotBlank
@@ -37,12 +39,15 @@ public class Account extends BaseEntity {
     private String email;
 
     @NotBlank
+    @Pattern(regexp = "(\\+[0-9]{2,3})?(\\s?[0-9]{3}){3}")
     private String phoneNumber;
 
     @NotBlank
+    @Size(max = 32)
     private String firstName;
 
     @NotBlank
+    @Size(max = 32)
     private String lastName;
 
     private Boolean active;

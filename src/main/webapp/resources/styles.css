@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 85vh;
+    height: 100vh;
 }
 
 .form-container {
@@ -23,7 +23,7 @@
 }
 
 .form-group input {
-    width: auto !important;
+    width: 24rem !important;
 }
 
 .button-group {
@@ -57,6 +57,7 @@
 }
 
 .error {
-    font-size: .875em;
+    width: 24rem;
+    font-size: .875rem;
     color: #dc3545;
 }

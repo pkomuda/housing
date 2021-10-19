@@ -7,7 +7,7 @@
         <nav th:replace="fragments/navbar::navbar"></nav>
         <form class="center" action="#" th:action="@{/register}" th:object="${account}" method="post">
             <h1 th:text="#{label.register}"></h1>
-            <div class="form-container col-sm-4">
+            <div class="form-container col-sm-5">
                 <div class="form-group">
                     <label for="username" th:text="#{account.username}"></label>
                     <div>
@@ -31,19 +31,31 @@
                 </div>
                 <div class="form-group">
                     <label for="email" th:text="#{account.email}"></label>
-                    <input id="email" class="form-control" th:field="*{email}"/>
+                    <div>
+                        <input id="email" class="form-control" th:field="*{email}"/>
+                        <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="phoneNumber" th:text="#{account.phoneNumber}"></label>
-                    <input id="phoneNumber" class="form-control" th:field="*{phoneNumber}"/>
+                    <div>
+                        <input id="phoneNumber" class="form-control" th:field="*{phoneNumber}"/>
+                        <div class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="firstName" th:text="#{account.firstName}"></label>
-                    <input id="firstName" class="form-control" th:field="*{firstName}"/>
+                    <div>
+                        <input id="firstName" class="form-control" th:field="*{firstName}"/>
+                        <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="lastName" th:text="#{account.lastName}"></label>
-                    <input id="lastName" class="form-control" th:field="*{lastName}"/>
+                    <div>
+                        <input id="lastName" class="form-control" th:field="*{lastName}"/>
+                        <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                    </div>
                 </div>
                 <div class="button-group">
                     <button id="submit" type="submit" class="btn btn-primary" th:text="#{label.ok}"></button>

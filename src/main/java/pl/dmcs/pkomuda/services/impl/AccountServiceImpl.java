@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import pl.dmcs.pkomuda.exceptions.AccountAlreadyExistsException;
 import pl.dmcs.pkomuda.exceptions.AccountNotFoundException;
 import pl.dmcs.pkomuda.exceptions.ApplicationBaseException;
@@ -21,7 +22,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(propagation = Propagation.REQUIRES_NEW)
+@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = ApplicationBaseException.class)
 public class AccountServiceImpl implements AccountService {
 
     @Value("${host.url}")
@@ -37,6 +38,7 @@ public class AccountServiceImpl implements AccountService {
     public void addAccount(Account account) throws ApplicationBaseException {
         String token = UUID.randomUUID().toString();
         account.setPassword(passwordEncoder.encode(account.getPassword()));
+        account.setPhoneNumber(StringUtils.trimAllWhitespace(account.getPhoneNumber()));
         account.setActive(false);
         account.setToken(token);
         try {

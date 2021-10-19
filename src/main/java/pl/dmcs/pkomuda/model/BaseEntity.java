@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -12,7 +11,6 @@ import java.io.Serializable;
 public abstract class BaseEntity implements Serializable {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Setter(lombok.AccessLevel.NONE)
     private Long id;

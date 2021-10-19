@@ -6,8 +6,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.dmcs.pkomuda.model.Account;
 
+import java.util.Optional;
+
 @Repository
 @Transactional(propagation = Propagation.MANDATORY)
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
+    Optional<Account> findByToken(String token);
 }

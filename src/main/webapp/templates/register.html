@@ -10,19 +10,32 @@
             <div class="form-container col-sm-4">
                 <div class="form-group">
                     <label for="username" th:text="#{account.username}"></label>
-                    <input id="username" class="form-control" th:field="*{username}"/>
+                    <div>
+                        <input id="username" class="form-control" th:field="*{username}"/>
+                        <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="password" th:text="#{account.password}"></label>
-                    <input id="password" type="password" class="form-control" th:field="*{password}"/>
+                    <div>
+                        <input id="password" type="password" class="form-control" th:field="*{password}"/>
+                        <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword" th:text="#{account.confirmPassword}"></label>
-                    <input id="confirmPassword" type="password" class="form-control" th:field="*{confirmPassword}"/>
+                    <div>
+                        <input id="confirmPassword" type="password" class="form-control" th:field="*{confirmPassword}"/>
+                        <div class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="email" th:text="#{account.email}"></label>
                     <input id="email" class="form-control" th:field="*{email}"/>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber" th:text="#{account.phoneNumber}"></label>
+                    <input id="phoneNumber" class="form-control" th:field="*{phoneNumber}"/>
                 </div>
                 <div class="form-group">
                     <label for="firstName" th:text="#{account.firstName}"></label>

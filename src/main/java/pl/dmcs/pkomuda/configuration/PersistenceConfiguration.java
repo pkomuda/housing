@@ -45,7 +45,10 @@ public class PersistenceConfiguration {
         entityManagerFactory.setDataSource(dataSource());
         entityManagerFactory.setPackagesToScan("pl.dmcs.pkomuda.model");
         entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManagerFactory.setJpaPropertyMap(Map.of("hibernate.hbm2ddl.auto", "update"));
+        entityManagerFactory.setJpaPropertyMap(Map.of(
+                "hibernate.hbm2ddl.auto", "update",
+                "hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy"
+        ));
         return entityManagerFactory;
     }
 

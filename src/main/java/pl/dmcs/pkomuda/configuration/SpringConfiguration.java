@@ -36,6 +36,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setPrefix("/templates/");
         templateResolver.setSuffix(".html");
+        templateResolver.setCharacterEncoding("utf-8");
         return templateResolver;
     }
 
@@ -51,6 +52,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("messages");
+        messageSource.setDefaultEncoding("utf-8");
         return messageSource;
     }
 
@@ -58,6 +60,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
     public ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
+        viewResolver.setCharacterEncoding("utf-8");
         return viewResolver;
     }
 

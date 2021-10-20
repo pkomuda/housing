@@ -2,6 +2,7 @@ package pl.dmcs.pkomuda.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,14 +13,19 @@ import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class AccessLevel extends BaseEntity {
 
+    public AccessLevel(AccessLevelType type) {
+        this.type = type;
+    }
+
     @EqualsAndHashCode.Include
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private AccessLevelType type;
 
     @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "accessLevels")
-    private Set<Account> account = new HashSet<>();
+    private Set<Account> accounts = new HashSet<>();
 }

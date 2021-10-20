@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import pl.dmcs.pkomuda.exceptions.AccountAlreadyExistsException;
 import pl.dmcs.pkomuda.exceptions.AccountNotFoundException;
 import pl.dmcs.pkomuda.exceptions.ApplicationBaseException;
+import pl.dmcs.pkomuda.model.AccessLevelType;
 import pl.dmcs.pkomuda.model.Account;
 import pl.dmcs.pkomuda.repositories.AccountRepository;
 import pl.dmcs.pkomuda.services.AccountService;
@@ -41,6 +42,7 @@ public class AccountServiceImpl implements AccountService {
         account.setPhoneNumber(StringUtils.trimAllWhitespace(account.getPhoneNumber()));
         account.setActive(false);
         account.setToken(token);
+        account.addAccessLevel(AccessLevelType.RESIDENT);
         try {
             accountRepository.saveAndFlush(account);
         } catch (PersistenceException | DataAccessException e) {
@@ -50,9 +52,12 @@ public class AccountServiceImpl implements AccountService {
             }
             throw new ApplicationBaseException(e);
         }
-        String text = "<a href=\"" + hostUrl + "/confirmAccount/" + token + "\">"
+        emailSender.sendMessage(account.getEmail(), "Confirm your account", generateEmailConfirmationText(token));
+    }
+
+    private String generateEmailConfirmationText(String token) {
+        return "<a href=\"" + hostUrl + "/confirmAccount/" + token + "\">"
                 + "Click here" + "</a>" + " to confirm your account";
-        emailSender.sendMessage(account.getEmail(), "Confirm your account", text);
     }
 
     public void confirmAccount(String token) throws ApplicationBaseException {

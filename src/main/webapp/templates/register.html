@@ -5,7 +5,7 @@
     </head>
     <body>
         <nav th:replace="fragments/navbar::navbar"></nav>
-        <form class="center" action="#" th:action="@{/register}" th:object="${account}" method="post">
+        <form class="center tall" action="#" th:action="@{/register}" th:object="${account}" method="post">
             <h1 th:text="#{label.register}"></h1>
             <div class="form-container col-sm-5">
                 <div class="form-group">
@@ -58,8 +58,8 @@
                     </div>
                 </div>
                 <div class="button-group">
-                    <button id="submit" type="submit" class="btn btn-primary" th:text="#{label.ok}"></button>
-                    <button id="cancel" class="btn btn-danger" th:text="#{label.cancel}"></button>
+                    <button id="ok" type="submit" class="btn btn-primary" th:text="#{label.ok}"></button>
+                    <button id="cancel" class="btn btn-danger" onclick="history.go(-1); return false" th:text="#{label.cancel}"></button>
                 </div>
             </div>
         </form>

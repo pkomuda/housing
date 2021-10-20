@@ -61,11 +61,23 @@ public class Account extends BaseEntity {
     @OneToMany(mappedBy = "account")
     private List<Bill> bills = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "account_access_levels",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "access_level_id")
     )
     private Set<AccessLevel> accessLevels = new HashSet<>();
+
+    public void addAccessLevel(AccessLevelType accessLevelType) {
+        AccessLevel accessLevel = new AccessLevel(accessLevelType);
+        accessLevels.add(accessLevel);
+        accessLevel.getAccounts().add(this);
+    }
+
+    public void deleteAccessLevel(AccessLevelType accessLevelType) {
+        AccessLevel accessLevel = new AccessLevel(accessLevelType);
+        accessLevels.remove(accessLevel);
+        accessLevel.getAccounts().remove(this);
+    }
 }

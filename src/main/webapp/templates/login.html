@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head::head">
+        <title th:text="#{label.title}"></title>
+    </head>
+    <body>
+        <nav th:replace="fragments/navbar::navbar"></nav>
+        <form class="center short" action="#" th:action="@{/login}" method="post">
+            <h1 th:text="#{label.login}"></h1>
+            <div class="form-container col-sm-5">
+                <div class="form-group">
+                    <label for="username" th:text="#{account.username}"></label>
+                    <input id="username" class="form-control" name="username"/>
+                </div>
+                <div class="form-group">
+                    <label for="password" th:text="#{account.password}"></label>
+                    <input id="password" type="password" class="form-control" name="password"/>
+                </div>
+                <div class="error text-center" th:if="${error}" th:text="#{error.incorrect.credentials}"></div>
+                <div class="button-group">
+                    <button id="ok" type="submit" class="btn btn-primary" th:text="#{label.ok}"></button>
+                    <button id="cancel" class="btn btn-danger" onclick="history.go(-1); return false" th:text="#{label.cancel}"></button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

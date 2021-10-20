@@ -13,5 +13,6 @@ import java.util.Optional;
 @Transactional(propagation = Propagation.MANDATORY, rollbackFor = ApplicationBaseException.class)
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
+    Optional<Account> findByUsername(String username);
     Optional<Account> findByToken(String token);
 }

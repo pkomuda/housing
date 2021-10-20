@@ -5,7 +5,14 @@
     </head>
     <body>
         <nav th:replace="fragments/navbar::navbar"></nav>
-        <h1 th:text="#{label.error}"></h1>
-        <p th:text="#{${message}}"></p>
+        <div class="center short">
+            <h1 th:text="#{label.error}"></h1>
+            <div class="form-container center col-sm-4">
+                <p th:text="#{${message}}"></p>
+                <div class="button-group">
+                    <button id="ok" class="btn btn-primary" onclick="history.go(-1); return false" th:text="#{label.ok}"></button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

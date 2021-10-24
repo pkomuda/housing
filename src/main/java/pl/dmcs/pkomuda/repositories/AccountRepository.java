@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.dmcs.pkomuda.exceptions.ApplicationBaseException;
 import pl.dmcs.pkomuda.model.Account;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,4 +16,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Optional<Account> findByUsername(String username);
     Optional<Account> findByToken(String token);
+    List<Account> findAllByOrderByUsernameAsc();
 }

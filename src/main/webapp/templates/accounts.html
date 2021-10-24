@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head::head">
+        <title th:text="#{label.title}"></title>
+    </head>
+    <body>
+        <nav th:replace="fragments/navbar::navbar"></nav>
+        <div class="center container">
+            <h1 th:text="#{label.listAccounts}"></h1>
+            <table class="table table-bordered">
+                <tr>
+                    <th th:text="#{account.username}"></th>
+                    <th th:text="#{account.firstName}"></th>
+                    <th th:text="#{account.lastName}"></th>
+                    <th th:text="#{account.email}"></th>
+                    <th th:text="#{account.phoneNumber}"></th>
+                </tr>
+                <tr th:each="account : ${accounts}">
+                    <td th:text="${account.username}"></td>
+                    <td th:text="${account.firstName}"></td>
+                    <td th:text="${account.lastName}"></td>
+                    <td th:text="${account.email}"></td>
+                    <td th:text="${account.phoneNumber}"></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

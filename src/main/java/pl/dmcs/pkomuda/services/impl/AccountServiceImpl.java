@@ -2,6 +2,7 @@ package pl.dmcs.pkomuda.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,8 @@ import pl.dmcs.pkomuda.services.AccountService;
 import pl.dmcs.pkomuda.utils.EmailSender;
 
 import javax.persistence.PersistenceException;
-import java.util.Optional;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 @Service
@@ -37,11 +39,28 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void addAccount(Account account) throws ApplicationBaseException {
-        String token = UUID.randomUUID().toString();
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         account.setPhoneNumber(StringUtils.trimAllWhitespace(account.getPhoneNumber()));
-        account.setActive(false);
-        account.setToken(token);
+        account.setConfirmed(true);
+        account.setToken(UUID.randomUUID().toString());
+        try {
+            accountRepository.saveAndFlush(account);
+        } catch (PersistenceException | DataAccessException e) {
+            if (e.getMessage().contains("username_unique")
+                    || e.getMessage().contains("email_unique")) {
+                throw new AccountAlreadyExistsException(e);
+            }
+            throw new ApplicationBaseException(e);
+        }
+    }
+
+    @Override
+    public void register(Account account) throws ApplicationBaseException {
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        account.setPhoneNumber(StringUtils.trimAllWhitespace(account.getPhoneNumber()));
+        account.setActive(true);
+        account.setConfirmed(false);
+        account.setToken(UUID.randomUUID().toString());
         account.addAccessLevel(AccessLevelType.RESIDENT);
         try {
             accountRepository.saveAndFlush(account);
@@ -52,20 +71,27 @@ public class AccountServiceImpl implements AccountService {
             }
             throw new ApplicationBaseException(e);
         }
-        emailSender.sendMessage(account.getEmail(), "Confirm your account", generateEmailConfirmationText(token));
+        sendConfirmationEmail(account.getEmail(), account.getToken());
     }
 
-    private String generateEmailConfirmationText(String token) {
-        return "<a href=\"" + hostUrl + "/confirmAccount/" + token + "\">"
-                + "Click here" + "</a>" + " to confirm your account";
+    private void sendConfirmationEmail(String email, String token) throws ApplicationBaseException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", LocaleContextHolder.getLocale());
+        String subject = resourceBundle.getString("email.confirmAccount.subject");
+        String text = "<a href=\"" + hostUrl + "/confirmAccount/" + token + "\">"
+                + resourceBundle.getString("email.confirmAccount.link") + "</a> "
+                + resourceBundle.getString("email.confirmAccount.text");
+        emailSender.sendMessage(email, subject, text);
     }
 
+    @Override
     public void confirmAccount(String token) throws ApplicationBaseException {
-        Optional<Account> accountOptional = accountRepository.findByToken(token);
-        if (accountOptional.isEmpty()) {
-            throw new AccountNotFoundException();
-        }
-        Account account = accountOptional.get();
+        Account account = accountRepository.findByToken(token)
+                .orElseThrow(AccountNotFoundException::new);
         account.setActive(true);
+    }
+
+    @Override
+    public List<Account> getAllAccounts() {
+        return accountRepository.findAllByOrderByUsernameAsc();
     }
 }

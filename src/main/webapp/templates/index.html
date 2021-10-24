@@ -5,5 +5,8 @@
     </head>
     <body>
         <nav th:replace="fragments/navbar::navbar"></nav>
+        <script th:if="${registrationSuccess}" th:inline="javascript">
+            alert(/*[[#{register.success}]]*/);
+        </script>
     </body>
 </html>

@@ -1,7 +1,6 @@
 package pl.dmcs.pkomuda.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,9 +13,9 @@ import pl.dmcs.pkomuda.exceptions.ApplicationBaseException;
 import pl.dmcs.pkomuda.model.Account;
 import pl.dmcs.pkomuda.repositories.AccountRepository;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,15 +31,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(ApplicationBaseException.KEY_DEFAULT);
         }
         Account account = accountOptional.get();
-        Set<GrantedAuthority> authorities = account.getAccessLevels().stream()
+        List<SimpleGrantedAuthority> authorities = account.getAccessLevels().stream()
                 .map(accessLevel -> new SimpleGrantedAuthority(accessLevel.getType().label))
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparing(SimpleGrantedAuthority::getAuthority))
+                .toList();
         return new User(account.getUsername(),
                 account.getPassword(),
+                account.getConfirmed(),
+                true,
+                true,
                 account.getActive(),
-                true,
-                true,
-                true,
                 authorities);
     }
 }

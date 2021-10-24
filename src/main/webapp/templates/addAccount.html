@@ -5,8 +5,8 @@
     </head>
     <body>
         <nav th:replace="fragments/navbar::navbar"></nav>
-        <form class="center" action="#" th:action="@{/register}" th:object="${account}" method="post">
-            <h1 th:text="#{label.register}"></h1>
+        <form class="center" action="#" th:action="@{/addAccount}" th:object="${account}" method="post">
+            <h1 th:text="#{label.addAccount}"></h1>
             <div class="form-container col-sm-5">
                 <div class="form-group">
                     <label for="username" th:text="#{account.username}"></label>
@@ -55,6 +55,23 @@
                     <div>
                         <input id="lastName" class="form-control" th:field="*{lastName}"/>
                         <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="accessLevels" th:text="#{account.accessLevels}"></label>
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox-container">
+                            <div style="margin-right: 1rem" th:each="accessLevel : ${accessLevels}">
+                                <input id="accessLevels" type="checkbox" th:text="#{${accessLevel.getType().label}}" th:value="${accessLevel.getType().label}" th:field="*{accessLevels}">
+                            </div>
+                        </div>
+                        <div class="error" th:if="${#fields.hasErrors('accessLevels')}" th:errors="*{accessLevels}"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="active" th:text="#{account.activity}"></label>
+                    <div class="checkbox-container">
+                        <input id="active" type="checkbox" th:text="#{account.active}" th:field="*{active}">
                     </div>
                 </div>
                 <div class="button-group">

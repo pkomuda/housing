@@ -5,6 +5,14 @@
     </head>
     <body>
         <nav th:replace="fragments/navbar::navbar"></nav>
-        <h1 th:text="#{label.confirmAccount}"></h1>
+        <div class="center vertical">
+            <h1 th:text="#{label.confirmAccount.header}"></h1>
+            <div class="form-container center col-sm-4">
+                <p th:text="#{label.confirmAccount.text}"></p>
+                <div class="button-group">
+                    <a id="ok" class="btn btn-primary" th:href="@{/}" th:text="#{label.ok}"></a>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

@@ -8,13 +8,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 2rem 0;
 }
 
-.tall {
-    height: 100vh;
-}
-
-.short {
+.vertical {
     height: 80vh;
 }
 
@@ -22,6 +19,18 @@
     padding: 1rem;
     border: 1px solid var(--bs-gray-300);
     border-radius: 0.25rem;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    width: var(--form-width);
 }
 
 .form-group {
@@ -34,8 +43,12 @@
     padding: 0.375rem 0;
 }
 
-.form-group input {
+.form-group input:not([type=checkbox]) {
     width: var(--form-width) !important;
+}
+
+.form-group input[type=checkbox] {
+    margin-right: 0.25rem;
 }
 
 .form-group .error {

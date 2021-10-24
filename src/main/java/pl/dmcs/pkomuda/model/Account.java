@@ -52,6 +52,8 @@ public class Account extends BaseEntity {
 
     private Boolean active;
 
+    private Boolean confirmed;
+
     private String token;
 
     @OneToOne

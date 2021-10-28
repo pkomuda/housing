@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head::head">
+        <title th:text="#{label.title}"></title>
+    </head>
+    <body>
+        <nav th:replace="fragments/navbar::navbar"></nav>
+        <form class="center" action="#" th:action="@{/editAccount}" th:object="${account}" method="post">
+            <h1 th:text="#{label.accountDetails}"></h1>
+            <div class="form-container col-sm-5">
+                <div class="form-group">
+                    <label th:text="#{account.username}"></label>
+                    <p th:text="*{username}"></p>
+                    <input type="hidden" th:field="*{username}"/>
+                </div>
+                <div class="form-group">
+                    <label th:text="#{account.email}"></label>
+                    <p th:text="*{email}"></p>
+                    <input type="hidden" th:field="*{email}"/>
+                </div>
+                <div class="form-group">
+                    <label th:text="#{account.phoneNumber}"></label>
+                    <p th:text="*{formattedPhoneNumber()}"></p>
+                    <input type="hidden" th:field="*{phoneNumber}"/>
+                </div>
+                <div class="form-group">
+                    <label th:text="#{account.firstName}"></label>
+                    <p th:text="*{firstName}"></p>
+                    <input type="hidden" th:field="*{firstName}"/>
+                </div>
+                <div class="form-group">
+                    <label th:text="#{account.lastName}"></label>
+                    <p th:text="*{lastName}"></p>
+                    <input type="hidden" th:field="*{lastName}"/>
+                </div>
+                <div class="form-group">
+                    <label for="accessLevels" th:text="#{account.accessLevels}"></label>
+                    <div class="checkbox-wrapper">
+                        <div id="accessLevels" class="checkbox-container">
+                            <div style="margin-right: 1rem" th:each="accessLevel : ${accessLevels}">
+                                <input th:id="'accessLevel-' + ${accessLevel.getType().name().toLowerCase()}" type="checkbox" th:text="#{${accessLevel.getType().label}}" th:value="${accessLevel.getType().label}" th:field="*{accessLevels}"/>
+                            </div>
+                        </div>
+                        <div class="error error-fixed" th:if="${#fields.hasErrors('accessLevels')}" th:errors="*{accessLevels}"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="active" th:text="#{account.activity}"></label>
+                    <div class="checkbox-container">
+                        <input id="active" type="checkbox" th:text="#{account.active}" th:field="*{active}"/>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button id="edit" type="submit" class="btn btn-primary" th:text="#{label.edit}"></button>
+                    <button id="cancel" class="btn btn-danger" onclick="history.go(-1); return false" th:text="#{label.cancel}"></button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

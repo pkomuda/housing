@@ -74,15 +74,6 @@ public class AccountServiceImpl implements AccountService {
         sendConfirmationEmail(account.getEmail(), account.getToken());
     }
 
-    private void sendConfirmationEmail(String email, String token) throws ApplicationBaseException {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", LocaleContextHolder.getLocale());
-        String subject = resourceBundle.getString("email.confirmAccount.subject");
-        String text = "<a href=\"" + hostUrl + "/confirmAccount/" + token + "\">"
-                + resourceBundle.getString("email.confirmAccount.link") + "</a> "
-                + resourceBundle.getString("email.confirmAccount.text");
-        emailSender.sendMessage(email, subject, text);
-    }
-
     @Override
     public void confirmAccount(String token) throws ApplicationBaseException {
         Account account = accountRepository.findByToken(token)
@@ -91,7 +82,30 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account getAccount(String username) throws ApplicationBaseException {
+        return accountRepository.findByUsername(username)
+                .orElseThrow(AccountNotFoundException::new);
+    }
+
+    @Override
     public List<Account> getAllAccounts() {
         return accountRepository.findAllByOrderByUsernameAsc();
+    }
+
+    @Override
+    public void editAccount(Account account) throws AccountNotFoundException {
+        Account temp = accountRepository.findByUsername(account.getUsername())
+                .orElseThrow(AccountNotFoundException::new);
+        temp.setActive(account.getActive());
+        temp.setAccessLevels(account.getAccessLevels());
+    }
+
+    private void sendConfirmationEmail(String email, String token) throws ApplicationBaseException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", LocaleContextHolder.getLocale());
+        String subject = resourceBundle.getString("email.confirmAccount.subject");
+        String text = "<a href=\"" + hostUrl + "/confirmAccount/" + token + "\">"
+                + resourceBundle.getString("email.confirmAccount.link") + "</a> "
+                + resourceBundle.getString("email.confirmAccount.text");
+        emailSender.sendMessage(email, subject, text);
     }
 }

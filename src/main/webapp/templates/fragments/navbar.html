@@ -5,7 +5,7 @@
         <title th:text="#{label.title}"></title>
     </head>
     <body>
-        <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <nav th:fragment="navbar" class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand" th:href="@{/}">
                     <img th:src="@{/resources/images/android-chrome-512x512.png}" width="48" height="48"/>
@@ -17,7 +17,7 @@
                             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" th:case="'es'">🇪🇸</a>
                             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" th:case="'pl'">🇵🇱</a>
                         </th:block>
-                        <ul class="dropdown-menu" style="min-width: 3.5rem">
+                        <ul class="dropdown-menu" style="min-width: 3.4rem">
                             <li>
                                 <a class="dropdown-item" href="?lang=en">🇬🇧</a>
                             </li>
@@ -38,15 +38,41 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a class="nav-link" sec:authentication="name"></a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" sec:authentication="name"></a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <th:block th:if="${session.accessLevel == 'access.level.admin'}">
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/accounts}" th:text="#{label.listAccounts}"></a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/addAccount}" th:text="#{label.addAccount}"></a>
+                                    </li>
+                                </th:block>
+                                <th:block th:if="${session.accessLevel == 'access.level.manager'}">
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/buildings}" th:text="#{label.listBuildings}"></a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/addBuilding}" th:text="#{label.addBuilding}"></a>
+                                    </li>
+                                </th:block>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form action="#" th:action="@{/logout}" method="post">
+                                        <button type="submit" class="btn dropdown-item" th:text="#{label.logout}"></button>
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
                     </th:block>
                     <th:block sec:authorize="isAnonymous()">
-                        <li>
+                        <li class="nav-item">
                             <a class="nav-link" th:href="@{/login}" th:text="#{label.login}"></a>
                         </li>
-                        <li>
+                        <li class="nav-item">
                             <a class="nav-link" th:href="@{/register}" th:text="#{label.register}"></a>
                         </li>
                     </th:block>

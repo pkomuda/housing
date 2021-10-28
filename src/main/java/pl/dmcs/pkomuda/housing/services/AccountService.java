@@ -10,5 +10,7 @@ public interface AccountService {
     void addAccount(Account account) throws ApplicationBaseException;
     void register(Account account) throws ApplicationBaseException;
     void confirmAccount(String token) throws ApplicationBaseException;
+    Account getAccount(String username) throws ApplicationBaseException;
     List<Account> getAllAccounts();
+    void editAccount(Account account) throws ApplicationBaseException;
 }

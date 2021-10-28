@@ -14,13 +14,22 @@
                     <th th:text="#{account.lastName}"></th>
                     <th th:text="#{account.email}"></th>
                     <th th:text="#{account.phoneNumber}"></th>
+                    <th></th>
                 </tr>
-                <tr th:each="account : ${accounts}">
-                    <td th:text="${account.username}"></td>
-                    <td th:text="${account.firstName}"></td>
-                    <td th:text="${account.lastName}"></td>
-                    <td th:text="${account.email}"></td>
-                    <td th:text="${account.formattedPhoneNumber()}"></td>
+                <tr th:each="account : ${accounts}" th:object="${account}">
+                    <td th:text="*{username}"></td>
+                    <td th:text="*{firstName}"></td>
+                    <td th:text="*{lastName}"></td>
+                    <td th:text="*{email}"></td>
+                    <td th:text="*{formattedPhoneNumber()}"></td>
+                    <td class="dropdown">
+                        <i class="bi bi-three-dots-vertical" role="button" data-bs-toggle="dropdown"></i>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" th:href="@{|/account/${account.username}|}" th:text="#{label.details}"></a>
+                            </li>
+                        </ul>
+                    </td>
                 </tr>
             </table>
         </div>

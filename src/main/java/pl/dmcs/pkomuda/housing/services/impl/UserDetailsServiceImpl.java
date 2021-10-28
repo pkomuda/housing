@@ -14,7 +14,6 @@ import pl.dmcs.pkomuda.housing.model.Account;
 import pl.dmcs.pkomuda.housing.repositories.AccountRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,11 +24,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Account> accountOptional = accountRepository.findByUsername(username);
-        if (accountOptional.isEmpty()) {
-            throw new UsernameNotFoundException(ApplicationBaseException.KEY_DEFAULT);
-        }
-        Account account = accountOptional.get();
+        Account account = accountRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(ApplicationBaseException.KEY_DEFAULT));
         List<SimpleGrantedAuthority> authorities = account.getAccessLevels().stream()
                 .map(accessLevel -> new SimpleGrantedAuthority(accessLevel.getType().label))
                 .toList();

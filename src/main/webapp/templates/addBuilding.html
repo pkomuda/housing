@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head::head">
+        <title th:text="#{label.title}"></title>
+    </head>
+    <body>
+        <nav th:replace="fragments/navbar::navbar"></nav>
+        <form class="center vertical" action="#" th:action="@{/addBuilding}" th:object="${building}" method="post">
+            <h1 th:text="#{label.addBuilding}"></h1>
+            <div class="form-container col-sm-5">
+                <div class="form-group">
+                    <label for="city" th:text="#{building.city}"></label>
+                    <div>
+                        <input id="city" class="form-control" th:field="*{city}"/>
+                        <div class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="streetName" th:text="#{building.streetName}"></label>
+                    <div>
+                        <input id="streetName" class="form-control" th:field="*{streetName}"/>
+                        <div class="error" th:if="${#fields.hasErrors('streetName')}" th:errors="*{streetName}"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="streetNumber" th:text="#{building.streetNumber}"></label>
+                    <div>
+                        <input id="streetNumber" class="form-control" th:field="*{streetNumber}"/>
+                        <div class="error" th:if="${#fields.hasErrors('streetNumber')}" th:errors="*{streetNumber}"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="postalCode" th:text="#{building.postalCode}"></label>
+                    <div>
+                        <input id="postalCode" class="form-control" th:field="*{postalCode}"/>
+                        <div class="error" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></div>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button id="ok" type="submit" class="btn btn-primary" th:text="#{label.ok}"></button>
+                    <button id="cancel" class="btn btn-danger" onclick="history.go(-1); return false" th:text="#{label.cancel}"></button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

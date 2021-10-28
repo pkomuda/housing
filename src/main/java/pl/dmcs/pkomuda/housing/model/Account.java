@@ -40,7 +40,7 @@ public class Account extends BaseEntity {
     private String email;
 
     @NotBlank
-    @Pattern(regexp = "(\\+[0-9]{2,3})?(\\s?[0-9]{3}){3}")
+    @Pattern(regexp = "(\\+[0-9]{2})?(\\s?[0-9]{3}){3}")
     private String phoneNumber;
 
     @NotBlank
@@ -64,7 +64,7 @@ public class Account extends BaseEntity {
     @OneToMany(mappedBy = "account")
     private List<Bill> bills = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(
             name = "account_access_levels",
             joinColumns = @JoinColumn(name = "account_id"),
@@ -95,11 +95,6 @@ public class Account extends BaseEntity {
                     phoneNumber.substring(3, 6),
                     phoneNumber.substring(6, 9),
                     phoneNumber.substring(9, 12));
-            case 13 -> MessageFormat.format("{0} {1} {2} {3}",
-                    phoneNumber.substring(0, 4),
-                    phoneNumber.substring(4, 7),
-                    phoneNumber.substring(7, 10),
-                    phoneNumber.substring(10, 13));
             default -> phoneNumber;
         };
     }

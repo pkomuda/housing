@@ -60,18 +60,18 @@
                 <div class="form-group">
                     <label for="accessLevels" th:text="#{account.accessLevels}"></label>
                     <div class="checkbox-wrapper">
-                        <div class="checkbox-container">
+                        <div id="accessLevels" class="checkbox-container">
                             <div style="margin-right: 1rem" th:each="accessLevel : ${accessLevels}">
-                                <input id="accessLevels" type="checkbox" th:text="#{${accessLevel.getType().label}}" th:value="${accessLevel.getType().label}" th:field="*{accessLevels}">
+                                <input th:id="'accessLevel-' + ${accessLevel.getType().name().toLowerCase()}" type="checkbox" th:text="#{${accessLevel.getType().label}}" th:value="${accessLevel.getType().label}" th:field="*{accessLevels}"/>
                             </div>
                         </div>
-                        <div class="error" th:if="${#fields.hasErrors('accessLevels')}" th:errors="*{accessLevels}"></div>
+                        <div class="error error-fixed" th:if="${#fields.hasErrors('accessLevels')}" th:errors="*{accessLevels}"></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="active" th:text="#{account.activity}"></label>
                     <div class="checkbox-container">
-                        <input id="active" type="checkbox" th:text="#{account.active}" th:field="*{active}">
+                        <input id="active" type="checkbox" th:text="#{account.active}" th:field="*{active}"/>
                     </div>
                 </div>
                 <div class="button-group">

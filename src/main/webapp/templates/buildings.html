@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head::head">
+        <title th:text="#{label.title}"></title>
+    </head>
+    <body>
+        <nav th:replace="fragments/navbar::navbar"></nav>
+        <div class="center container">
+            <h1 th:text="#{label.listBuildings}"></h1>
+            <table class="table table-bordered">
+                <tr>
+                    <th th:text="#{building.city}"></th>
+                    <th th:text="#{building.streetName}"></th>
+                    <th th:text="#{building.streetNumber}"></th>
+                    <th th:text="#{building.postalCode}"></th>
+                    <th></th>
+                </tr>
+                <tr th:each="building : ${buildings}" th:object="${building}">
+                    <td th:text="*{city}"></td>
+                    <td th:text="*{streetName}"></td>
+                    <td th:text="*{streetNumber}"></td>
+                    <td th:text="*{formattedPostalCode()}"></td>
+                    <td class="dropdown">
+                        <i class="bi bi-three-dots-vertical" role="button" data-bs-toggle="dropdown"></i>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" th:href="@{|/building/${building.id}|}" th:text="#{label.details}"></a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

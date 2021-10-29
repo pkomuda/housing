@@ -114,3 +114,9 @@ input::-webkit-inner-spin-button {
     position: absolute;
     margin-top: 2.3rem;
 }
+
+.captcha {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}

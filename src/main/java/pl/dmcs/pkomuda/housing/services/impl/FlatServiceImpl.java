@@ -9,6 +9,8 @@ import pl.dmcs.pkomuda.housing.model.Flat;
 import pl.dmcs.pkomuda.housing.repositories.FlatRepository;
 import pl.dmcs.pkomuda.housing.services.FlatService;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = ApplicationBaseException.class)
@@ -19,5 +21,10 @@ public class FlatServiceImpl implements FlatService {
     @Override
     public void addFlat(Flat flat) {
         flatRepository.saveAndFlush(flat);
+    }
+
+    @Override
+    public List<Flat> getAllFlats(Long buildingId) {
+        return flatRepository.findAllByBuildingIdOrderByNumberAsc(buildingId);
     }
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head::head">
+        <title th:text="#{label.title}"></title>
+    </head>
+    <body>
+        <nav th:replace="fragments/navbar::navbar"></nav>
+        <div class="center container">
+            <h1 th:text="#{label.listFlats}"></h1>
+            <table class="table table-bordered">
+                <tr>
+                    <th th:text="#{flat.number}"></th>
+                    <th th:text="#{flat.rooms}"></th>
+                    <th th:text="#{flat.area}"></th>
+                    <th></th>
+                </tr>
+                <tr th:each="flat : ${flats}" th:object="${flat}">
+                    <td th:text="*{number}"></td>
+                    <td th:text="*{rooms}"></td>
+                    <td th:text="${flat.area} + ' m²'"></td>
+                    <td class="dropdown">
+                        <i class="bi bi-three-dots-vertical" role="button" data-bs-toggle="dropdown"></i>
+                        <ul class="dropdown-menu">
+                            <li>
+
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

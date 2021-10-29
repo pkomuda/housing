@@ -36,7 +36,8 @@ public class EmailConfiguration {
                 "mail.transport.protocol", "smtp",
                 "mail.smtp.auth", true,
                 "mail.smtp.starttls.enable", true,
-                "mail.smtp.ssl.protocols", "TLSv1.2"
+                "mail.smtp.ssl.protocols", "TLSv1.2",
+                "mail.debug", true
         ));
         return mailSender;
     }

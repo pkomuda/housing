@@ -5,7 +5,7 @@
     </head>
     <body>
         <nav th:replace="fragments/navbar::navbar"></nav>
-        <form class="center vertical" action="#" th:action="@{|/addFlat/${id}|}" th:object="${flat}" method="post" novalidate>
+        <form class="center vertical" action="#" th:action="@{|/addFlat/${buildingId}|}" th:object="${flat}" method="post" novalidate>
             <h1 th:text="#{label.addFlat}"></h1>
             <div class="form-container col-sm-5">
                 <div class="form-group">

@@ -7,8 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.dmcs.pkomuda.housing.exceptions.ApplicationBaseException;
 import pl.dmcs.pkomuda.housing.model.Flat;
 
+import java.util.List;
+
 @Repository
 @Transactional(propagation = Propagation.MANDATORY, rollbackFor = ApplicationBaseException.class)
 public interface FlatRepository extends JpaRepository<Flat, Long> {
 
+    List<Flat> findAllByBuildingIdOrderByNumberAsc(Long buildingId);
 }

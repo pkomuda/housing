@@ -78,7 +78,7 @@ public class AccountServiceImpl implements AccountService {
     public void confirmAccount(String token) throws ApplicationBaseException {
         Account account = accountRepository.findByToken(token)
                 .orElseThrow(AccountNotFoundException::new);
-        account.setActive(true);
+        account.setConfirmed(true);
     }
 
     @Override

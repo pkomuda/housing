@@ -26,21 +26,27 @@ public class FlatController {
 
     private final BuildingService buildingService;
 
-    @GetMapping("/addFlat/{id}")
-    public String addFlat(@PathVariable Long id, Model model) {
-        model.addAttribute("id", id);
+    @GetMapping("/addFlat/{buildingId}")
+    public String addFlat(@PathVariable Long buildingId, Model model) {
+        model.addAttribute("buildingId", buildingId);
         model.addAttribute("flat", new Flat());
         return "addFlat";
     }
 
-    @PostMapping("/addFlat/{id}")
-    public String addFlat(@PathVariable Long id, @Valid @ModelAttribute("flat") Flat flat,
+    @PostMapping("/addFlat/{buildingId}")
+    public String addFlat(@PathVariable Long buildingId, @Valid @ModelAttribute("flat") Flat flat,
                           BindingResult bindingResult) throws ApplicationBaseException {
         if (bindingResult.hasErrors()) {
             return "addFlat";
         }
-        flat.setBuilding(buildingService.getBuilding(id));
+        flat.setBuilding(buildingService.getBuilding(buildingId));
         flatService.addFlat(flat);
         return "redirect:/buildings";
+    }
+
+    @GetMapping("/flats/{buildingId}")
+    public String getAllFlats(@PathVariable Long buildingId, Model model) {
+        model.addAttribute("flats", flatService.getAllFlats(buildingId));
+        return "flats";
     }
 }

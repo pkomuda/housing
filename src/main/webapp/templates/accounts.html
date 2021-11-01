@@ -12,21 +12,22 @@
                     <th th:text="#{account.username}"></th>
                     <th th:text="#{account.firstName}"></th>
                     <th th:text="#{account.lastName}"></th>
-                    <th th:text="#{account.email}"></th>
-                    <th th:text="#{account.phoneNumber}"></th>
+                    <th th:text="#{account.flat}"></th>
                     <th></th>
                 </tr>
                 <tr th:each="account : ${accounts}" th:object="${account}">
                     <td th:text="*{username}"></td>
                     <td th:text="*{firstName}"></td>
                     <td th:text="*{lastName}"></td>
-                    <td th:text="*{email}"></td>
-                    <td th:text="*{formattedPhoneNumber()}"></td>
+                    <td th:text="${account.flat} ?: '—'"></td>
                     <td class="dropdown">
                         <i class="bi bi-three-dots-vertical" role="button" data-bs-toggle="dropdown"></i>
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item" th:href="@{|/account/${account.username}|}" th:text="#{label.details}"></a>
+                            </li>
+                            <li th:if="${account.flat == null}">
+                                <a class="dropdown-item" th:href="@{|/assignFlat/${account.username}|}" th:text="#{label.assignFlat}"></a>
                             </li>
                         </ul>
                     </td>

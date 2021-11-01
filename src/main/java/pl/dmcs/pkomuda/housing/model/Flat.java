@@ -3,7 +3,6 @@ package pl.dmcs.pkomuda.housing.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -38,8 +37,22 @@ public class Flat extends BaseEntity {
     private Account account;
 
     @JsonIgnore
-    @ToString.Exclude
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "building_id")
     private Building building;
+
+    public void setAccount(Account account) {
+        this.account = account;
+        account.setFlat(this);
+    }
+
+    @Override
+    public String toString() {
+        return building.getStreetName()
+                + " " + building.getStreetNumber()
+                + "/" + number +
+                ", " + building.formattedPostalCode()
+                + " " + building.getCity();
+    }
 }

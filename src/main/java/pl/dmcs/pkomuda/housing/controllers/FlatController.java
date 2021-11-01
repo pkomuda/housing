@@ -6,13 +6,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.dmcs.pkomuda.housing.exceptions.ApplicationBaseException;
 import pl.dmcs.pkomuda.housing.model.Flat;
-import pl.dmcs.pkomuda.housing.services.BuildingService;
 import pl.dmcs.pkomuda.housing.services.FlatService;
 
 import javax.validation.Valid;
@@ -23,8 +19,6 @@ import javax.validation.Valid;
 public class FlatController {
 
     private final FlatService flatService;
-
-    private final BuildingService buildingService;
 
     @GetMapping("/addFlat/{buildingId}")
     public String addFlat(@PathVariable Long buildingId, Model model) {
@@ -39,8 +33,7 @@ public class FlatController {
         if (bindingResult.hasErrors()) {
             return "addFlat";
         }
-        flat.setBuilding(buildingService.getBuilding(buildingId));
-        flatService.addFlat(flat);
+        flatService.addFlat(flat, buildingId);
         return "redirect:/buildings";
     }
 
@@ -48,5 +41,19 @@ public class FlatController {
     public String getAllFlats(@PathVariable Long buildingId, Model model) {
         model.addAttribute("flats", flatService.getAllFlats(buildingId));
         return "flats";
+    }
+
+    @GetMapping("/assignFlat/{username}")
+    public String assignFlat(@PathVariable String username, Model model) {
+        model.addAttribute("username", username);
+        model.addAttribute("flats", flatService.getEmptyFlats());
+        return "assignFlat";
+    }
+
+    @PostMapping("/assignFlat/{username}")
+    public String assignFlat(@PathVariable String username,
+                             @RequestParam("flatId") String flatId) throws ApplicationBaseException {
+        flatService.assignFlat(Long.parseLong(flatId), username);
+        return "redirect:/accounts";
     }
 }

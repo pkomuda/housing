@@ -5,17 +5,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.dmcs.pkomuda.housing.exceptions.ApplicationBaseException;
-import pl.dmcs.pkomuda.housing.model.Account;
+import pl.dmcs.pkomuda.housing.model.Bill;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Transactional(propagation = Propagation.MANDATORY, rollbackFor = ApplicationBaseException.class)
-public interface AccountRepository extends JpaRepository<Account, Long> {
+public interface BillRepository extends JpaRepository<Bill, Long> {
 
-    Optional<Account> findByUsername(String username);
-    Optional<Account> findByToken(String token);
-    Optional<Account> findByFlatId(Long flatId);
-    List<Account> findAllByOrderByUsernameAsc();
+    List<Bill> findAllByAccountUsernameOrderByIssueDateDesc(String username);
 }

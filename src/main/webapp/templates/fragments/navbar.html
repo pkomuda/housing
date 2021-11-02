@@ -57,6 +57,11 @@
                                         <a class="dropdown-item" th:href="@{/addBuilding}" th:text="#{label.addBuilding}"></a>
                                     </li>
                                 </th:block>
+                                <th:block th:if="${session.accessLevel == 'access.level.resident'}">
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/bills}" th:text="#{label.listBills}"></a>
+                                    </li>
+                                </th:block>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

@@ -61,7 +61,7 @@ public class Account extends BaseEntity {
     @JoinColumn(name = "flat_id")
     private Flat flat;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "account")
     private List<Bill> bills = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -71,6 +71,16 @@ public class Account extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "access_level_id")
     )
     private Set<AccessLevel> accessLevels = new HashSet<>();
+
+    public void addBill(Bill bill) {
+        bills.add(bill);
+        bill.setAccount(this);
+    }
+
+    public void deleteBill(Bill bill) {
+        bills.remove(bill);
+        bill.setAccount(null);
+    }
 
     public void addAccessLevel(AccessLevelType accessLevelType) {
         AccessLevel accessLevel = new AccessLevel(accessLevelType);

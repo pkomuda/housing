@@ -33,6 +33,7 @@ public class Flat extends BaseEntity {
     private BigDecimal area;
 
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     @OneToOne(mappedBy = "flat")
     private Account account;
 

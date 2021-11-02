@@ -17,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -55,6 +56,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setTemplateEngineMessageSource(messageSource());
         templateEngine.addDialect(new SpringSecurityDialect());
+        templateEngine.addDialect(new Java8TimeDialect());
         return templateEngine;
     }
 

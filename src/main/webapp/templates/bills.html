@@ -14,8 +14,8 @@
                     <th></th>
                 </tr>
                 <tr th:each="entry : ${bills}">
-                    <td th:text="${entry.key.issueDate}"></td>
-                    <td th:text="${entry.value}"></td>
+                    <td th:text="${#temporals.format(entry.key.issueDate, 'dd.MM.yyyy')}"></td>
+                    <td th:text="${entry.value} + ' PLN'"></td>
                     <td class="dropdown">
                         <i class="bi bi-three-dots-vertical" role="button" data-bs-toggle="dropdown"></i>
                         <ul class="dropdown-menu">

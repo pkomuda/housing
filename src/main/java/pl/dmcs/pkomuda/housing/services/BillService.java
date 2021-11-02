@@ -9,5 +9,6 @@ import java.util.Map;
 public interface BillService {
 
     void addBill(Bill bill, Long flatId) throws ApplicationBaseException;
+    Bill getBill(Long id) throws ApplicationBaseException;
     Map<Bill, BigDecimal> getAllBills(String username);
 }

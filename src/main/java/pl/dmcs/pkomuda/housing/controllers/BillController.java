@@ -18,7 +18,7 @@ import pl.dmcs.pkomuda.housing.model.UtilityType;
 import pl.dmcs.pkomuda.housing.services.BillService;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Controller
@@ -32,7 +32,7 @@ public class BillController {
     public String addBill(@PathVariable Long flatId, Model model) {
         model.addAttribute("flatId", flatId);
         model.addAttribute("bill", Bill.builder()
-                .issueDate(LocalDate.now())
+                .issueDate(LocalDateTime.now())
                 .utilities(Arrays.stream(UtilityType.values())
                         .map(Utility::new)
                         .toList())
@@ -48,6 +48,12 @@ public class BillController {
         }
         billService.addBill(bill, flatId);
         return "redirect:/buildings";
+    }
+
+    @GetMapping("/bill/{id}")
+    public String getBill(@PathVariable Long id, Model model) throws ApplicationBaseException {
+        model.addAttribute("bill", billService.getBill(id));
+        return "bill";
     }
 
     @GetMapping("/bills")

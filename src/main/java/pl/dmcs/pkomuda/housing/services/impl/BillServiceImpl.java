@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.dmcs.pkomuda.housing.exceptions.AccountNotFoundException;
 import pl.dmcs.pkomuda.housing.exceptions.ApplicationBaseException;
+import pl.dmcs.pkomuda.housing.exceptions.BillNotFoundException;
 import pl.dmcs.pkomuda.housing.model.Account;
 import pl.dmcs.pkomuda.housing.model.Bill;
 import pl.dmcs.pkomuda.housing.model.Utility;
@@ -14,6 +15,7 @@ import pl.dmcs.pkomuda.housing.repositories.BillRepository;
 import pl.dmcs.pkomuda.housing.services.BillService;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -38,10 +40,19 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public Bill getBill(Long id) throws ApplicationBaseException {
+        return billRepository.findById(id)
+                .orElseThrow(BillNotFoundException::new);
+    }
+
+    @Override
     public Map<Bill, BigDecimal> getAllBills(String username) {
         return billRepository.findAllByAccountUsernameOrderByIssueDateDesc(username).stream()
-                .collect(Collectors.toMap(Function.identity(), bill -> bill.getUtilities().stream()
-                        .map(Utility::getPrice)
-                        .reduce(BigDecimal.ZERO, BigDecimal::add)));
+                .collect(Collectors.toMap(Function.identity(),
+                        bill -> bill.getUtilities().stream()
+                                .map(Utility::getPrice)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add),
+                        (price1, price2) -> price1,
+                        LinkedHashMap::new));
     }
 }

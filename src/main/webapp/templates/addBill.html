@@ -5,15 +5,15 @@
     </head>
     <body>
         <nav th:replace="fragments/navbar::navbar"></nav>
-        <form class="center" action="#" th:action="@{|/addBill/${flatId}|}" th:object="${bill}" method="post">
+        <form class="center" action="#" th:action="@{|/addBill/${flatId}|}" th:object="${bill}" method="post" novalidate>
             <h1 th:text="#{label.addBill}"></h1>
             <div class="form-container col-sm-5">
                 <input type="hidden" th:field="*{issueDate}"/>
                 <div class="form-group" th:each="utility, itemStat : *{utilities}">
                     <input type="hidden" th:field="*{utilities[__${itemStat.index}__].type}"/>
-                    <label th:text="#{${utility.getType().label}}"></label>
-                    <div class="input-labelled">
-                        <input type="number" class="form-control" th:field="*{utilities[__${itemStat.index}__].price}"/>
+                    <label for="utilities" th:text="#{${utility.getType().label}}"></label>
+                    <div id="utilities" class="input-labelled">
+                        <input th:id="'utility-' + ${bill.utilities[__${itemStat.index}__].type.name().toLowerCase()}" type="number" class="form-control" th:field="*{utilities[__${itemStat.index}__].price}"/>
                         <span class="input-group-text">PLN</span>
                         <div class="error error-fixed" th:if="${#fields.hasErrors('${bill.utilities[__${itemStat.index}__].price}')}" th:errors="${bill.utilities[__${itemStat.index}__].price}"></div>
                     </div>

@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
 public class Bill extends BaseEntity {
 
     @NotNull
-    private LocalDate issueDate;
+    private LocalDateTime issueDate;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
@@ -26,6 +26,6 @@ public class Bill extends BaseEntity {
 
     @Valid
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "bill")
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "bill")
     private List<Utility> utilities = new ArrayList<>();
 }

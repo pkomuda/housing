@@ -77,21 +77,10 @@ public class Account extends BaseEntity {
         bill.setAccount(this);
     }
 
-    public void deleteBill(Bill bill) {
-        bills.remove(bill);
-        bill.setAccount(null);
-    }
-
     public void addAccessLevel(AccessLevelType accessLevelType) {
         AccessLevel accessLevel = new AccessLevel(accessLevelType);
         accessLevels.add(accessLevel);
         accessLevel.getAccounts().add(this);
-    }
-
-    public void deleteAccessLevel(AccessLevelType accessLevelType) {
-        AccessLevel accessLevel = new AccessLevel(accessLevelType);
-        accessLevels.remove(accessLevel);
-        accessLevel.getAccounts().remove(this);
     }
 
     public String formattedPhoneNumber() {

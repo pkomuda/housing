@@ -16,7 +16,9 @@ import pl.dmcs.pkomuda.housing.model.Bill;
 import pl.dmcs.pkomuda.housing.model.Utility;
 import pl.dmcs.pkomuda.housing.model.UtilityType;
 import pl.dmcs.pkomuda.housing.services.BillService;
+import pl.dmcs.pkomuda.housing.services.PdfService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -27,6 +29,8 @@ import java.util.Arrays;
 public class BillController {
 
     private final BillService billService;
+
+    private final PdfService pdfService;
 
     @GetMapping("/addBill/{flatId}")
     public String addBill(@PathVariable Long flatId, Model model) {
@@ -60,5 +64,11 @@ public class BillController {
     public String getAllBills(Authentication authentication, Model model) {
         model.addAttribute("bills", billService.getAllBills(authentication.getName()));
         return "bills";
+    }
+
+    @GetMapping("/generatePdf/{billId}")
+    public void generateBillPdf(@PathVariable Long billId,
+                                HttpServletResponse response) throws ApplicationBaseException {
+        pdfService.generateBillPdf(billId, response);
     }
 }

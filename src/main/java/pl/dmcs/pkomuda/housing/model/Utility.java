@@ -21,7 +21,7 @@ public class Utility extends BaseEntity {
     }
 
     @NotNull
-    @DecimalMin("0.01")
+    @DecimalMin("0")
     @Digits(integer = 6, fraction = 2)
     private BigDecimal price;
 

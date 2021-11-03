@@ -22,6 +22,9 @@
                             <li>
                                 <a class="dropdown-item" th:href="@{|/bill/${entry.key.id}|}" th:text="#{label.details}"></a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{|/generatePdf/${entry.key.id}|}" target="_blank" th:text="#{label.generatePdf}"></a>
+                            </li>
                         </ul>
                     </td>
                 </tr>

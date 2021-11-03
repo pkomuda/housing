@@ -106,6 +106,6 @@ public class AccountServiceImpl implements AccountService {
         String text = "<a href=\"" + hostUrl + "/confirmAccount/" + token + "\">"
                 + resourceBundle.getString("email.confirmAccount.link") + "</a> "
                 + resourceBundle.getString("email.confirmAccount.text");
-        emailSender.sendMessage(email, subject, text);
+        emailSender.sendMessage(email, subject, text, null);
     }
 }

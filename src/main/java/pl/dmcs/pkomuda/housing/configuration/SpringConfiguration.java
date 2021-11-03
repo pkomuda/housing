@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -29,6 +30,7 @@ import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
+@EnableScheduling
 @ComponentScan("pl.dmcs.pkomuda.housing")
 @PropertySource("classpath:application.properties")
 public class SpringConfiguration implements WebMvcConfigurer {

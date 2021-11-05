@@ -5,6 +5,10 @@
     </head>
     <body>
         <nav th:replace="fragments/navbar::navbar"></nav>
+        <div class="center vertical">
+            <h1 th:text="#{label.title}"></h1>
+            <p>KAPJ 2021</p>
+        </div>
         <script th:if="${registrationSuccess}" th:inline="javascript">
             alert(/*[[#{register.success}]]*/);
         </script>

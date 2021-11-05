@@ -61,9 +61,15 @@ public class BillController {
     }
 
     @GetMapping("/bills")
-    public String getAllBills(Authentication authentication, Model model) {
-        model.addAttribute("bills", billService.getAllBills(authentication.getName()));
+    public String getAllBills(Model model) {
+        model.addAttribute("bills", billService.getAllBills());
         return "bills";
+    }
+
+    @GetMapping("/myBills")
+    public String getMyBills(Authentication authentication, Model model) {
+        model.addAttribute("bills", billService.getAllBills(authentication.getName()));
+        return "myBills";
     }
 
     @GetMapping("/generatePdf/{billId}")

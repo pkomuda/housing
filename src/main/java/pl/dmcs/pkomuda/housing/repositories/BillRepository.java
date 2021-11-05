@@ -13,5 +13,6 @@ import java.util.List;
 @Transactional(propagation = Propagation.MANDATORY, rollbackFor = ApplicationBaseException.class)
 public interface BillRepository extends JpaRepository<Bill, Long> {
 
+    List<Bill> findAllByOrderByIssueDateDesc();
     List<Bill> findAllByAccountUsernameOrderByIssueDateDesc(String username);
 }

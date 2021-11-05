@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head::head">
+        <title th:text="#{label.title}"></title>
+    </head>
+    <body>
+        <nav th:replace="fragments/navbar::navbar"></nav>
+        <div class="center vertical">
+            <h1 th:text="#{label.noAccess}"></h1>
+            <div class="form-container center col-sm-4">
+                <p th:text="#{error.noAccess}"></p>
+                <div class="button-group">
+                    <button id="ok" class="btn btn-primary" onclick="history.go(-1); return false" th:text="#{label.ok}"></button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

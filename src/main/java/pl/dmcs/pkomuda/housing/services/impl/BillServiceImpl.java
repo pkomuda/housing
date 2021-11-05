@@ -46,6 +46,17 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public Map<Bill, BigDecimal> getAllBills() {
+        return billRepository.findAllByOrderByIssueDateDesc().stream()
+                .collect(Collectors.toMap(Function.identity(),
+                        bill -> bill.getUtilities().stream()
+                                .map(Utility::getPrice)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add),
+                        (price1, price2) -> price1,
+                        LinkedHashMap::new));
+    }
+
+    @Override
     public Map<Bill, BigDecimal> getAllBills(String username) {
         return billRepository.findAllByAccountUsernameOrderByIssueDateDesc(username).stream()
                 .collect(Collectors.toMap(Function.identity(),

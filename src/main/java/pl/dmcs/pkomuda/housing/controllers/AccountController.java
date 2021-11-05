@@ -69,10 +69,10 @@ public class AccountController {
         return "account";
     }
 
-    @GetMapping("/account")
-    public String getAccount(Authentication authentication, Model model) throws ApplicationBaseException {
+    @GetMapping("/myAccount")
+    public String getMyAccount(Authentication authentication, Model model) throws ApplicationBaseException {
         model.addAttribute(accountService.getAccount(authentication.getName()));
-        return "account";
+        return "myAccount";
     }
 
     @GetMapping("/accounts")

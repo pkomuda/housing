@@ -42,7 +42,7 @@
                             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" sec:authentication="name"></a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" th:href="@{/account}" th:text="#{label.accountDetails}"></a>
+                                    <a class="dropdown-item" th:href="@{/myAccount}" th:text="#{label.myAccountDetails}"></a>
                                 </li>
                                 <th:block th:if="${session.accessLevel == 'access.level.admin'}">
                                     <li>
@@ -59,10 +59,13 @@
                                     <li>
                                         <a class="dropdown-item" th:href="@{/addBuilding}" th:text="#{label.addBuilding}"></a>
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/bills}" th:text="#{label.listBills}"></a>
+                                    </li>
                                 </th:block>
                                 <th:block th:if="${session.accessLevel == 'access.level.resident'}">
                                     <li>
-                                        <a class="dropdown-item" th:href="@{/bills}" th:text="#{label.listBills}"></a>
+                                        <a class="dropdown-item" th:href="@{/myBills}" th:text="#{label.myBills}"></a>
                                     </li>
                                 </th:block>
                                 <li>

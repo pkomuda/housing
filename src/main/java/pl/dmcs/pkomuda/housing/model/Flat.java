@@ -38,7 +38,6 @@ public class Flat extends BaseEntity {
     private Account account;
 
     @JsonIgnore
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "building_id")
     private Building building;

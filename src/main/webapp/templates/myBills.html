@@ -6,18 +6,16 @@
     <body>
         <nav th:replace="fragments/navbar::navbar"></nav>
         <div class="center container">
-            <h1 th:text="#{label.listBills}"></h1>
+            <h1 th:text="#{label.myBills}"></h1>
             <table class="table table-bordered">
                 <tr>
                     <th th:text="#{bill.issueDate}"></th>
                     <th th:text="#{bill.totalPrice}"></th>
-                    <th th:text="#{label.flat}"></th>
                     <th></th>
                 </tr>
                 <tr th:each="entry : ${bills}">
                     <td th:text="${#temporals.format(entry.key.issueDate, 'dd.MM.yyyy')}"></td>
                     <td th:text="${entry.value} + ' PLN'"></td>
-                    <td th:text="${entry.key.account.flat}"></td>
                     <td class="dropdown">
                         <i class="bi bi-three-dots-vertical" role="button" data-bs-toggle="dropdown"></i>
                         <ul class="dropdown-menu">

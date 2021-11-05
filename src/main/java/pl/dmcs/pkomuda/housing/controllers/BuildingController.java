@@ -1,6 +1,7 @@
 package pl.dmcs.pkomuda.housing.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,12 +25,14 @@ public class BuildingController {
     private final BuildingService buildingService;
 
     @GetMapping("/addBuilding")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).MANAGER.label)")
     public String addBuilding(Model model) {
         model.addAttribute("building", new Building());
         return "addBuilding";
     }
 
     @PostMapping("/addBuilding")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).MANAGER.label)")
     public String addBuilding(@Valid @ModelAttribute("building") Building building,
                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -40,12 +43,14 @@ public class BuildingController {
     }
 
     @GetMapping("/building/{id}")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).MANAGER.label)")
     public String getBuilding(@PathVariable Long id, Model model) throws ApplicationBaseException {
         model.addAttribute("building", buildingService.getBuilding(id));
         return "building";
     }
 
     @GetMapping("/buildings")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).MANAGER.label)")
     public String getAllBuildings(Model model) {
         model.addAttribute("buildings", buildingService.getAllBuildings());
         return "buildings";

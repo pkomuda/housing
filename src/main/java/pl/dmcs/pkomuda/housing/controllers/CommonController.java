@@ -51,4 +51,9 @@ public class CommonController {
         }
         return "error";
     }
+
+    @GetMapping("/noAccess")
+    public String noAccess() {
+        return "noAccess";
+    }
 }

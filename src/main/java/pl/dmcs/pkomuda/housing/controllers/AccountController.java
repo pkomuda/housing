@@ -1,6 +1,7 @@
 package pl.dmcs.pkomuda.housing.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -35,6 +36,7 @@ public class AccountController {
     private final PasswordValidator passwordValidator;
 
     @GetMapping("/addAccount")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).ADMIN.label)")
     public String addAccount(Model model) {
         model.addAttribute("account", new Account());
         model.addAttribute("accessLevels", Arrays.stream(AccessLevelType.values())
@@ -44,6 +46,7 @@ public class AccountController {
     }
 
     @PostMapping("/addAccount")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).ADMIN.label)")
     public String addAccount(@Valid @ModelAttribute("account") Account account,
                              BindingResult bindingResult, Model model) throws ApplicationBaseException {
         accessLevelValidator.validate(account, bindingResult);
@@ -59,6 +62,7 @@ public class AccountController {
     }
 
     @GetMapping("/account/{username}")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).ADMIN.label)")
     public String getAccount(@PathVariable String username, Model model) throws ApplicationBaseException {
         if (!model.containsAttribute("account")) {
             model.addAttribute("account", accountService.getAccount(username));
@@ -76,12 +80,14 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).ADMIN.label)")
     public String getAllAccounts(Model model) {
         model.addAttribute("accounts", accountService.getAllAccounts());
         return "accounts";
     }
 
     @PostMapping("/editAccount")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).ADMIN.label)")
     public String editAccount(@ModelAttribute("account") Account account, BindingResult bindingResult,
                               RedirectAttributes redirectAttributes) throws ApplicationBaseException {
         accessLevelValidator.validate(account, bindingResult);

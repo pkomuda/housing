@@ -1,6 +1,7 @@
 package pl.dmcs.pkomuda.housing.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -33,6 +34,7 @@ public class BillController {
     private final PdfService pdfService;
 
     @GetMapping("/addBill/{flatId}")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).MANAGER.label)")
     public String addBill(@PathVariable Long flatId, Model model) {
         model.addAttribute("flatId", flatId);
         model.addAttribute("bill", Bill.builder()
@@ -45,6 +47,7 @@ public class BillController {
     }
 
     @PostMapping("/addBill/{flatId}")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).MANAGER.label)")
     public String addBill(@PathVariable Long flatId, @Valid @ModelAttribute("bill") Bill bill,
                           BindingResult bindingResult) throws ApplicationBaseException {
         if (bindingResult.hasErrors()) {
@@ -55,24 +58,30 @@ public class BillController {
     }
 
     @GetMapping("/bill/{id}")
+    @PreAuthorize("hasAnyAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).MANAGER.label," +
+            "T(pl.dmcs.pkomuda.housing.model.AccessLevelType).RESIDENT.label)")
     public String getBill(@PathVariable Long id, Model model) throws ApplicationBaseException {
         model.addAttribute("bill", billService.getBill(id));
         return "bill";
     }
 
     @GetMapping("/bills")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).MANAGER.label)")
     public String getAllBills(Model model) {
         model.addAttribute("bills", billService.getAllBills());
         return "bills";
     }
 
     @GetMapping("/myBills")
+    @PreAuthorize("hasAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).RESIDENT.label)")
     public String getMyBills(Authentication authentication, Model model) {
         model.addAttribute("bills", billService.getAllBills(authentication.getName()));
         return "myBills";
     }
 
     @GetMapping("/generatePdf/{billId}")
+    @PreAuthorize("hasAnyAuthority(T(pl.dmcs.pkomuda.housing.model.AccessLevelType).MANAGER.label," +
+            "T(pl.dmcs.pkomuda.housing.model.AccessLevelType).RESIDENT.label)")
     public void generateBillPdf(@PathVariable Long billId,
                                 HttpServletResponse response) throws ApplicationBaseException {
         pdfService.generateBillPdf(billId, response);
